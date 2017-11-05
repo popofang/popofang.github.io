@@ -3,14 +3,18 @@
 <head>
     <meta charset="utf-8">
     
-    <title>归档: 2017/10 | Hexo</title>
+    <title>sql_mode问题 | Hexo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2017/10/index.html">
+    <meta name="description" content="Mysql-5.7.19-winx64版本的sql_mode设置 我们常常为了去重而使用GROUP BY语句，在低版本数据库中使用可能不会出错，但在Mysql-5.7.19版本中会出现例如以下错误：   [Err] 1055 - Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated col">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sql_mode问题">
+<meta property="og:url" content="http://yoursite.com/2017/11/05/Mysql-5-7-19-winx64-sql-mode-err/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Mysql-5.7.19-winx64版本的sql_mode设置 我们常常为了去重而使用GROUP BY语句，在低版本数据库中使用可能不会出错，但在Mysql-5.7.19版本中会出现例如以下错误：   [Err] 1055 - Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated col">
+<meta property="og:updated_time" content="2017-11-05T07:46:13.056Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="sql_mode问题">
+<meta name="twitter:description" content="Mysql-5.7.19-winx64版本的sql_mode设置 我们常常为了去重而使用GROUP BY语句，在低版本数据库中使用可能不会出错，但在Mysql-5.7.19版本中会出现例如以下错误：   [Err] 1055 - Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated col">
     
 
     
@@ -205,66 +209,163 @@
 </aside>
 
             
-            <section id="main"><div class="timeline timeline-wrap">
-    
-            <div class="timeline-row timeline-row-major">
-                <span class="node"><i class="fa fa-calendar"></i></span>
-                <h1 class="title">2017</h1>
-            </div>
+            <section id="main"><article id="post-Mysql-5-7-19-winx64-sql-mode-err" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+        
+            <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2017/10/24/howToBlog/">Linux下使用hexo发博客</a>
+        <h1 class="article-title" itemprop="name">
+            sql_mode问题
         </h1>
     
 
-                <div class="article-meta">
-                    
+                
+                    <div class="article-meta">
+                        
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2017/10/24/howToBlog/">
-            <time datetime="2017-10-24T09:02:53.470Z" itemprop="datePublished">2017-10-24</time>
+        <a href="/2017/11/05/Mysql-5-7-19-winx64-sql-mode-err/">
+            <time datetime="2017-11-05T06:46:28.000Z" itemprop="datePublished">2017-11-05</time>
         </a>
     </div>
 
 
-                    
-                    
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+                        
+                        
+                    </div>
                 
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2017/10/24/Oil/">分油问题</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/10/24/Oil/">
-            <time datetime="2017-10-24T02:02:33.000Z" itemprop="datePublished">2017-10-24</time>
-        </a>
-    </div>
-
-
-                    
-                    
-                </div>
-            </div>
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h1 id="Mysql-5-7-19-winx64版本的sql-mode设置"><a href="#Mysql-5-7-19-winx64版本的sql-mode设置" class="headerlink" title="Mysql-5.7.19-winx64版本的sql_mode设置"></a>Mysql-5.7.19-winx64版本的sql_mode设置</h1><hr>
+<p>我们常常为了去重而使用<code>GROUP BY</code>语句，在低版本数据库中使用可能不会出错，<br>但在<strong>Mysql-5.7.19</strong>版本中会出现例如以下错误：</p>
+<blockquote>
+<ul>
+<li>[Err] 1055 - Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column ‘sup_order.商家ID’ which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by</li>
+</ul>
+</blockquote>
+<p>解决思路之一就是从<code>sql_mode</code>去除<code>only_full_group_by</code></p>
+<h3 id="如何查看当前数据库sql-mode"><a href="#如何查看当前数据库sql-mode" class="headerlink" title="如何查看当前数据库sql_mode"></a>如何查看当前数据库sql_mode</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql&gt; select @@sql_mode;</div></pre></td></tr></table></figure>
+<h3 id="mysql-5-7-19中默认情况下"><a href="#mysql-5-7-19中默认情况下" class="headerlink" title="mysql-5.7.19中默认情况下"></a>mysql-5.7.19中默认情况下</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sql_mode = <span class="string">'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'</span></div></pre></td></tr></table></figure>
+<h2 id="解决方法之一"><a href="#解决方法之一" class="headerlink" title="解决方法之一"></a>解决方法之一</h2><p>严格讲是不应该采用这种方法的！<br>在MYSQL安装目录下新建<strong>my.ini</strong>文件,内容也可自由发挥<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[client]</div><div class="line">port=3306</div><div class="line">default-character-set=utf8</div><div class="line">[mysqld] </div><div class="line"><span class="comment"># 设置为自己MYSQL的安装目录 </span></div><div class="line">basedir=D:\mysql-5.7.19-winx64</div><div class="line"><span class="comment"># 设置为MYSQL的数据目录 </span></div><div class="line">datadir=D:\mysql-5.7.19-winx64\data</div><div class="line">port=3306</div><div class="line">character_set_server=utf8</div><div class="line">sql_mode=NO_ENGINE_SUBSTITUTION,NO_AUTO_CREATE_USER</div></pre></td></tr></table></figure></p>
+<p>然后在管理员身份下运行cmd<br>先关闭MYSQL服务：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">net stop mysql</div></pre></td></tr></table></figure></p>
+<p>再开启：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">net start mysql</div></pre></td></tr></table></figure></p>
+<h1 id="Congratulations"><a href="#Congratulations" class="headerlink" title="Congratulations!"></a><em><center style="color:#5cb85c;">Congratulations!</center></em></h1>
+        
         </div>
-    
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
 </div>
+
+    <a data-url="http://yoursite.com/2017/11/05/Mysql-5-7-19-winx64-sql-mode-err/" data-id="cj9mfrq6a00003rixlt5uc5hd" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2017/11/05/Mysql-5-7-19-winx64-sql-mode-err/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2017/11/05/Mysql-5-7-19-winx64-sql-mode-err/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2017/10/24/howToBlog/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Linux下使用hexo发博客</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
 </section>
             
                 <aside id="sidebar">
@@ -386,11 +487,13 @@
     <script>
     var disqus_config = function () {
         
-        this.page.identifier = 'undefined';
+            this.page.url = 'http://yoursite.com/2017/11/05/Mysql-5-7-19-winx64-sql-mode-err/';
+        
+        this.page.identifier = 'Mysql-5-7-19-winx64-sql-mode-err';
     };
     (function() { 
         var d = document, s = d.createElement('script');  
-        s.src = '//' + 'hexo-theme-icarus' + '.disqus.com/count.js';
+        s.src = '//' + 'hexo-theme-icarus' + '.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
